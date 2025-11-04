@@ -270,10 +270,9 @@ Nhấn Ctrl + X để thoát
     </div>
 </body>
 </html>
-
 ```
 
-- Lưu lại file
+Lưu lại file
 Ctrl + O → Enter 
 Ctrl + X
 3.5 Chạy toàn bộ hệ thống
@@ -284,8 +283,23 @@ frontend/index.html
 - Chạy: docker compose up -d
 Docker sẽ bắt đầu tải và chạy 6 container:
 mariadb, phpmyadmin, nodered, influxdb, grafana, nginx
-
 <img width="1581" height="841" alt="image" src="https://github.com/user-attachments/assets/a35fb1b2-7597-4b6a-888a-e1570434a215" />
+
+3.6 Kiểm tra trên trình duyệt
+
+Dịch vụ	Cổng	Truy cập
+Trang chính (Nginx)	80	http://localhost
+<img width="1919" height="1078" alt="image" src="https://github.com/user-attachments/assets/aae71cdd-c05d-4671-9ed2-b7d7b4578203" />
+
+phpMyAdmin	8080	http://localhost:8080
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d4a7aa77-169f-4461-82d7-182259326c88" />
+
+Node-RED	1880	http://localhost:1880
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/aff063d6-038f-4cea-9bcd-f60c3a147f82" />
+
+Grafana	3000	http://localhost:3000
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/50f76a92-37e1-49cc-ae94-ceb2ef33cf75" />
+
 
 
 
