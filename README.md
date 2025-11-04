@@ -58,8 +58,224 @@ Chọn: Tải xuống cho Windows – AMD64
 Sau đó bấm Apply & Restart
 2.3 Kiểm tra Docker trong Ubuntu
 - Mở lại terminal Ubuntu (WSL2) và gõ: docker version
+  
 - <img width="1919" height="950" alt="image" src="https://github.com/user-attachments/assets/e16ff7fc-a7f2-49b9-91e5-69f996333d28" />
+
 → Docker đã hoạt động thành công 🎉
+
+## 3. DỰNG HỆ THỐNG DOCKER BẰNG FILE docker-compose.yml
+
+3.1 Tạo thư mục dự án
+
+- Trong Ubuntu (WSL2), gõ:
+
+cd /mnt/d
+
+mkdir baitap3_web
+
+cd baitap3_web
+<img width="1907" height="1079" alt="image" src="https://github.com/user-attachments/assets/02b912f4-b4ca-4146-93ea-577374326add" />
+
+3.2 Tạo file docker-compose.yml
+nano docker-compose.yml
+<img width="1912" height="1018" alt="image" src="https://github.com/user-attachments/assets/2a29002f-5f14-4610-ba8c-8494d6b6a5a5" />
+
+- Sao chép toàn bộ nội dung bên dưới
+    
+```
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: webdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - mariadb
+
+  nodered:
+    image: nodered/node-red
+    container_name: nodered
+    restart: always
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_data:/data
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html
+
+volumes:
+  mariadb_data:
+  influxdb_data:
+  nodered_data:
+```
+- Nhấn Ctrl + O → Enter để lưu
+
+- Nhấn Ctrl + X để thoát khỏi nano
+
+3.3 Tạo file nginx.conf
+
+- Trong thư mục /mnt/d/baitap3_web, gõ lệnh: nano nginx.conf
+
+Dán nội dung dưới đây:
+```
+events {}
+
+http {
+  server {
+    listen 80;
+    server_name luongnam.com;
+
+    # Trang web chính (Frontend)
+    location / {
+      root /usr/share/nginx/html;
+      index index.html;
+    }
+
+    # Truy cập Node-RED qua http://luongnam.com/nodered
+    location /nodered/ {
+      proxy_pass http://nodered:1880/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # Truy cập Grafana qua http://luongnam.com/grafana
+    location /grafana/ {
+      proxy_pass http://grafana:3000/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+  }
+}
+````
+<img width="1638" height="878" alt="image" src="https://github.com/user-attachments/assets/73ddd578-9299-4fdc-84be-50cd5fe07da9" />
+Nhấn Ctrl + O → Enter để lưu
+Nhấn Ctrl + X để thoát
+
+3.4 Tạo thư mục giao diện web
+
+- Trong Ubuntu ( ở thư mục /mnt/d/baitap3_web), gõ: mkdir frontend
+
+- Tạo file index.html cơ bản để kiểm tra: nano frontend/index.html
+  ```
+  <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Lương Ngọc Nam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #FF6B6B, #556270);
+            color: #ffffff; /* Chữ trắng */
+            text-align: center;
+            padding: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        h1 {
+            font-size: 52px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+        }
+        p {
+            font-size: 22px;
+            margin-bottom: 40px;
+        }
+        .btn-container {
+            display: flex;
+            gap: 20px;
+        }
+        .btn {
+            background-color: #ffffff; 
+            color: #FF6B6B; 
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 50px; 
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.4s ease; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover {
+            background-color: #556270;
+            color: #ffffff;
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Website Lương Ngọc Nam</h1>
+    <p>Chào mừng đến với không gian cá nhân của Nam. Hệ thống đang chạy trên Docker + WSL2!</p>
+    <div class="btn-container">
+        <a href="/nodered/" class="btn">Truy cập Node-RED</a>
+        <a href="/grafana/" class="btn">Xem biểu đồ Grafana</a>
+    </div>
+</body>
+</html>
+```
+
+
+
+
+
+
 
 
 
