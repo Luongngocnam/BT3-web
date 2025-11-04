@@ -283,6 +283,7 @@ frontend/index.html
 - Chạy: docker compose up -d
 Docker sẽ bắt đầu tải và chạy 6 container:
 mariadb, phpmyadmin, nodered, influxdb, grafana, nginx
+
 <img width="1581" height="841" alt="image" src="https://github.com/user-attachments/assets/a35fb1b2-7597-4b6a-888a-e1570434a215" />
 
 3.6 Kiểm tra trên trình duyệt
