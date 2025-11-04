@@ -201,12 +201,11 @@ Nhấn Ctrl + O → Enter để lưu
 Nhấn Ctrl + X để thoát
 
 3.4 Tạo thư mục giao diện web
-
 - Trong Ubuntu ( ở thư mục /mnt/d/baitap3_web), gõ: mkdir frontend
-
 - Tạo file index.html cơ bản để kiểm tra: nano frontend/index.html
+  
   ```
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -215,7 +214,9 @@ Nhấn Ctrl + X để thoát
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
+       
             font-family: 'Montserrat', sans-serif;
+      
             background: linear-gradient(135deg, #FF6B6B, #556270);
             color: #ffffff; /* Chữ trắng */
             text-align: center;
@@ -231,7 +232,7 @@ Nhấn Ctrl + X để thoát
             font-size: 52px;
             margin-bottom: 25px;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         p {
             font-size: 22px;
@@ -239,10 +240,10 @@ Nhấn Ctrl + X để thoát
         }
         .btn-container {
             display: flex;
-            gap: 20px;
+            gap: 20px; 
         }
         .btn {
-            background-color: #ffffff; 
+            background-color: #ffffff;
             color: #FF6B6B; 
             padding: 14px 30px;
             text-decoration: none;
@@ -253,8 +254,8 @@ Nhấn Ctrl + X để thoát
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .btn:hover {
-            background-color: #556270;
-            color: #ffffff;
+            background-color: #556270; 
+            color: #ffffff; 
             transform: translateY(-3px); 
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
@@ -269,6 +270,7 @@ Nhấn Ctrl + X để thoát
     </div>
 </body>
 </html>
+
 ```
 
 - Lưu lại file
@@ -282,6 +284,7 @@ frontend/index.html
 - Chạy: docker compose up -d
 Docker sẽ bắt đầu tải và chạy 6 container:
 mariadb, phpmyadmin, nodered, influxdb, grafana, nginx
+
 <img width="1581" height="841" alt="image" src="https://github.com/user-attachments/assets/a35fb1b2-7597-4b6a-888a-e1570434a215" />
 
 
