@@ -301,6 +301,39 @@ Node-RED	1880	http://localhost:1880
 Grafana	3000	http://localhost:3000
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/50f76a92-37e1-49cc-ae94-ceb2ef33cf75" />
 
+## 4. LẬP TRÌNH WEB FRONTEND + BACKEND (WEB IoT)
+
+### 4.1 Thiết kế CSDL MariaDB
+
+Vào http://localhost:8081 → đăng nhập:
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/b29ed89a-703e-4a2d-90c9-820ccca6c945" />
+### 4.2 Kết nối MariaDB & InfluxDB
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/daf91c33-81e5-40e6-9f83-afd3ccdf11ab" />
+
+### 4.2 Kết nối Grafana và hiển thị biểu đồ
+
+a. Đăng nhập Grafana
+
+- Truy cập:  http://localhost:3000
+
+•	Username: admin
+
+•	Password: admin (sau đó nhập mật khẩu mới)
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/ec039268-e543-4a5e-a04a-e3b62d21fdb4" />
+### 4.3 Tạo Frontend (index.html)
+
+a. Trong Ubuntu (WSL), vào thư mục dự án trên ổ D : 
+
+```
+cd /mnt/d/bt3-web/frontend
+nano index.html
+<img width="1911" height="1079" alt="image" src="https://github.com/user-attachments/assets/955cf4c2-2e42-4333-8881-ffe17bbcda11" />
+
+
+
+
+
+
 
 
 
