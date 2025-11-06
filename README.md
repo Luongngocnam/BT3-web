@@ -327,6 +327,7 @@ a. Trong Ubuntu (WSL), vào thư mục dự án trên ổ D :
 ```
 cd /mnt/d/bt3-web/frontend
 nano index.html
+```
 <img width="1911" height="1079" alt="image" src="https://github.com/user-attachments/assets/955cf4c2-2e42-4333-8881-ffe17bbcda11" />
 
 
